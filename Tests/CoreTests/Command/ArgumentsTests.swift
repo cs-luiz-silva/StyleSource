@@ -13,6 +13,7 @@ class ArgumentsTests: XCTestCase {
         let def = Arguments.default
 
         XCTAssertFalse(def.alwaysOverride)
+        XCTAssertFalse(def.verbose)
     }
 
     func testParseEmptyArguments() {
@@ -23,6 +24,12 @@ class ArgumentsTests: XCTestCase {
         let arguments = try Arguments.parse(from: ["--always-overwrite"])
 
         XCTAssert(arguments.alwaysOverride)
+    }
+
+    func testParseVerbose() throws {
+        let arguments = try Arguments.parse(from: ["--verbose"])
+
+        XCTAssert(arguments.verbose)
     }
 
     func testParseError() throws {

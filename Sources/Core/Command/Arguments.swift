@@ -7,20 +7,27 @@
 
 public struct ArgumentKeys {
     public static var alwaysOverwrite = "--always-overwrite"
+    public static var verbose = "--verbose"
 }
 
 public struct Arguments {
-    public static var `default` = Arguments(alwaysOverride: false)
+    public static var `default` = Arguments(alwaysOverride: false, verbose: false)
 
     public var alwaysOverride: Bool
+    public var verbose: Bool
+}
 
+extension Arguments {
     public static func parse(from arguments: [String]) throws -> Arguments {
-        var output = Arguments(alwaysOverride: false)
+        var output = Arguments.default
 
         for argument in arguments {
             switch argument {
             case ArgumentKeys.alwaysOverwrite:
                 output.alwaysOverride = true
+
+            case ArgumentKeys.verbose:
+                output.verbose = true
 
             default:
                 throw ParseError.unknownArgument(argument)
